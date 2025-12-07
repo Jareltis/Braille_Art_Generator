@@ -10,25 +10,30 @@
 
   <style>
     :root{
-      --bg:#071029;
-      --card:#071428;
-      --accent:#06b6d4;
-      --muted:#9fb0c6;
+      /* greener, lighter palette */
+      --bg:#083826;       /* primary darker green */
+      --bg2:#0e4d35;      /* secondary gradient stop */
+      --card:#0b3b2e;     /* card background */
+      --accent:#22c55e;   /* bright green accent */
+      --muted:#a7e9c9;    /* muted/labels */
       color-scheme: dark;
     }
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg) 0%, #071b2b 100%);color:#e6eef6}
-    .wrap{max-width:1100px;margin:18px auto;padding:10px} /* уменьшил отступы по бокам */
-    .card-app{background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);color:#e6fff3}
+    /* Меньше отступов слева/справа на странице */
+    .wrap{max-width:1200px;margin:8px auto;padding:6px}
+    .card-app{background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;box-shadow:0 6px 30px rgba(2,6,23,0.45)}
     h1{font-size:20px;margin-bottom:12px}
     label.small{font-size:13px;color:var(--muted)}
     .controls .form-control, .controls .form-select {background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
     .btn-primary{background:var(--accent);border-color:var(--accent)}
     canvas{background:#fff;border-radius:6px;max-width:100%;height:auto;display:block}
-    pre.output{white-space:pre;overflow:auto;padding:16px;border-radius:8px;background:#00121a;color:#e6eef6;font-family:monospace;line-height:0.95;min-height:140px;max-height:520px}
+    pre.output{white-space:pre;overflow:auto;padding:12px;border-radius:8px;background:rgba(0,18,10,0.9);color:#e6fff3;font-family:monospace;line-height:0.95;min-height:140px;max-height:600px}
     .small-muted{font-size:12px;color:var(--muted)}
+    /* Adjust preview border to match green theme */
+    #srcCanvas, #resCanvas{border:1px solid rgba(255,255,255,0.05)}
     /* mobile tweaks */
     @media(max-width:767.98px){
-      .wrap{padding:6px}
+      .wrap{padding:4px}
       .card-app{padding:12px}
     }
   </style>
@@ -104,7 +109,6 @@
             <div>
               <label class="small">Исходное изображение / изменённый холст</label>
               <div class="d-flex gap-2 flex-wrap align-items-start">
-                <!-- можно уменьшить размеры превью если нужно -->
                 <canvas id="srcCanvas" width="360" height="240" style="max-width:46%;"></canvas>
                 <canvas id="resCanvas" width="360" height="240" style="max-width:46%;"></canvas>
               </div>
