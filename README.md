@@ -13,9 +13,9 @@
 - Настраиваете параметры генерации (размер в символах, порог, инверсию и т.д.).  
 - Нажимаете **Generate** — получаете результат как текст из Braille-символов.  
 - Готовый ASCII-арт можно  
- - сохранить в `.txt`,  
- - скопировать в буфер,  
- - скачать как PNG предпросмотра.
+-- сохранить в `.txt`,  
+-- скопировать в буфер,  
+-- скачать как PNG предпросмотра.
 
 Всё работает на JS + `<canvas>` — можно просто открыть `index.html`, никакой сборки и сложного окружения.
 
@@ -36,5 +36,5 @@
 1\. Клонируйте репозиторий:
 
   ```bash
-  git clone https://github.com/Yahasi/Braille\_Art\_Generator.git
-  cd Braille\_Art\_Generator
+  git clone https://github.com/Yahasi/Braille_Art_Generator.git
+  cd Braille_Art_Generator
