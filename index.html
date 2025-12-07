@@ -10,31 +10,28 @@
 
   <style>
     :root{
-      /* greener, lighter palette */
-      --bg:#083826;       /* primary darker green */
-      --bg2:#0e4d35;      /* secondary gradient stop */
-      --card:#0b3b2e;     /* card background */
-      --accent:#22c55e;   /* bright green accent */
-      --muted:#a7e9c9;    /* muted/labels */
+      --bg:#083826;
+      --bg2:#0e4d35;
+      --card:#0b3b2e;
+      --accent:#22c55e;
+      --muted:#a7e9c9;
       color-scheme: dark;
     }
     html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);color:#e6fff3}
-    /* Меньше отступов слева/справа на странице */
-    .wrap{max-width:1200px;margin:8px auto;padding:6px}
-    .card-app{background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;box-shadow:0 6px 30px rgba(2,6,23,0.45)}
-    h1{font-size:20px;margin-bottom:12px}
+    /* ещё меньше отступов слева/справа */
+    .wrap{max-width:1300px;margin:6px auto;padding:4px}
+    .card-app{background:rgba(255,255,255,0.03);border-radius:12px;padding:14px;box-shadow:0 6px 30px rgba(2,6,23,0.45)}
+    h1{font-size:20px;margin-bottom:10px}
     label.small{font-size:13px;color:var(--muted)}
     .controls .form-control, .controls .form-select {background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
     .btn-primary{background:var(--accent);border-color:var(--accent)}
     canvas{background:#fff;border-radius:6px;max-width:100%;height:auto;display:block}
-    pre.output{white-space:pre;overflow:auto;padding:12px;border-radius:8px;background:rgba(0,18,10,0.9);color:#e6fff3;font-family:monospace;line-height:0.95;min-height:140px;max-height:600px}
+    pre.output{white-space:pre;overflow:auto;padding:12px;border-radius:8px;background:rgba(0,18,10,0.9);color:#e6fff3;font-family:monospace;line-height:0.95;min-height:160px;max-height:700px}
     .small-muted{font-size:12px;color:var(--muted)}
-    /* Adjust preview border to match green theme */
-    #srcCanvas, #resCanvas{border:1px solid rgba(255,255,255,0.05)}
-    /* mobile tweaks */
+    .preview-stack canvas{border:1px solid rgba(255,255,255,0.05);}
     @media(max-width:767.98px){
       .wrap{padding:4px}
-      .card-app{padding:12px}
+      .card-app{padding:10px}
     }
   </style>
 </head>
@@ -92,26 +89,51 @@
               </select>
             </div>
 
-            <div class="d-flex gap-2 flex-wrap mb-2">
+            <hr style="border-color:rgba(255,255,255,0.03)" />
+            <div class="mb-2">
+              <label class="small">Яркость (brightness)</label>
+              <input id="brightness" type="range" class="form-range" min="-100" max="100" value="0">
+            </div>
+            <div class="mb-2">
+              <label class="small">Контраст (contrast)</label>
+              <input id="contrast" type="range" class="form-range" min="-100" max="100" value="0">
+            </div>
+            <div class="mb-2">
+              <label class="small">Насыщенность (saturation)</label>
+              <input id="saturation" type="range" class="form-range" min="-100" max="100" value="0">
+            </div>
+            <div class="mb-2">
+              <label class="small">Резкость (sharpness)</label>
+              <input id="sharpness" type="range" class="form-range" min="0" max="5" step="0.1" value="0">
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap mb-2 mt-2">
               <button id="generate" class="btn btn-primary btn-sm">Сгенерировать</button>
               <button id="downloadTxt" class="btn btn-outline-light btn-sm">Скачать .txt</button>
               <button id="copy" class="btn btn-outline-light btn-sm">Копировать</button>
               <button id="downloadPng" class="btn btn-outline-light btn-sm">Скачать PNG</button>
             </div>
 
-            <div class="small-muted">Подсказка: каждый символ braille кодирует блок 2×4 пикселя. Указывайте ширину/высоту в символах.</div>
+            <div class="small-muted">Подсказка: каждый символ braille кодирует блок 2×4 пикселя. Редактируйте изображение слева — редакция применяется на правый (редактируемый) холст.</div>
           </div>
         </div>
 
         <!-- RIGHT: previews and output (vertical stack) -->
         <div class="col-12 col-md-7">
-          <div class="d-flex flex-column gap-3">
+          <div class="d-flex flex-column gap-3 preview-stack">
             <div>
-              <label class="small">Исходное изображение / изменённый холст</label>
-              <div class="d-flex gap-2 flex-wrap align-items-start">
-                <canvas id="srcCanvas" width="360" height="240" style="max-width:46%;"></canvas>
-                <canvas id="resCanvas" width="360" height="240" style="max-width:46%;"></canvas>
-              </div>
+              <label class="small">Исходное изображение (preview)</label>
+              <canvas id="srcCanvas" width="360" height="240"></canvas>
+            </div>
+
+            <div>
+              <label class="small">Редактируемое изображение (отсюда будет генерироваться Braille)</label>
+              <canvas id="editCanvas" width="720" height="480"></canvas>
+            </div>
+
+            <div>
+              <label class="small">Масштабированный холст (для предпросмотра перед генерацией)</label>
+              <canvas id="resCanvas" width="360" height="240"></canvas>
             </div>
 
             <div>
