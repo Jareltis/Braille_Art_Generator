@@ -36,5 +36,5 @@
 1\. Клонируйте репозиторий:
 
   ```bash
-  git clone https://github.com/Yahasi/Braille_Art_Generator.git
+  git clone https://github.com/Jareltis/Braille_Art_Generator.git
   cd Braille_Art_Generator
